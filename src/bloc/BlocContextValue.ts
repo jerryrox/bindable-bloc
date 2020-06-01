@@ -33,12 +33,12 @@ export default class BlocContextValue {
      * Returns the Bloc instance of specified type.
      * @param {Constructor<T>} constructor The type of the BLoC instance you want to retrieve.
      */
-    getBloc<T extends BaseBloc>(constructor: Constructor<T>): T | null {
+    getBloc<T extends BaseBloc>(constructor: Constructor<T>): T {
         for(const entry of this._entries) {
             if(entry.bloc instanceof constructor)
                 return entry.bloc as T;
         }
-        return null;
+        throw new Error(`No BLoC instance found for specified type: ${constructor.name}`);
     }
 
     /**
@@ -52,8 +52,6 @@ export default class BlocContextValue {
      * Adds the specified entry under this context's management.
      */
     private addEntry(entry: IBlocContextEntry) {
-        if (entry === null || entry === undefined)
-            return;
         this._entries.push(entry);
     }
 }
