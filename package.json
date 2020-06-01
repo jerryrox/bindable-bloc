@@ -30,7 +30,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "npm run lint",
+    "test": "npm run lint && npm run test:jest",
     "test:jest": "./node_modules/.bin/jest --runInBand",
     "lint": "./node_modules/.bin/tslint --config tslint.json --project ."
   }
