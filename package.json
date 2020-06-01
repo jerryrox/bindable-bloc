@@ -2,7 +2,8 @@
   "name": "bindable-bloc",
   "author": "Jerry Kim <jerryrox@live.co.kr>",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.10.1",
@@ -28,8 +29,13 @@
     "tslint-react": "^5.0.0",
     "typescript": "^3.9.3"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerryrox/bindable-bloc.git"
+  },
   "scripts": {
     "build": "tsc",
+    "prepare": "npm run build",
     "test": "npm run lint && npm run test:jest",
     "test:jest": "./node_modules/.bin/jest --runInBand",
     "lint": "./node_modules/.bin/tslint --config tslint.json --project ."
