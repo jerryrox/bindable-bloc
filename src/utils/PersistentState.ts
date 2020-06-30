@@ -23,7 +23,7 @@ export async function makePersistent<TValue>(bindable: Bindable<TValue>, uniqueK
     // Set persisted state to the bindable if exists.
     // Otherwise, use the current state of the bindable as default.
     try {
-        const savedValue = await customStore?.getItem<TValue>(uniqueKey);
+        const savedValue = await store.getItem<TValue>(uniqueKey);
         if(savedValue !== undefined && savedValue !== null)
             bindable.setValue(savedValue);
         subscribeToBindable();
