@@ -24,7 +24,7 @@ export async function makePersistent<TValue>(bindable: Bindable<TValue>, uniqueK
     // Otherwise, use the current state of the bindable as default.
     try {
         const savedValue = await customStore?.getItem<TValue>(uniqueKey);
-        if(savedValue !== undefined)
+        if(savedValue !== undefined && savedValue !== null)
             bindable.setValue(savedValue);
         subscribeToBindable();
     }
