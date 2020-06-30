@@ -1,6 +1,7 @@
 import BaseBloc from "./BaseBloc";
 import BlocEvent from "./BlocEvent";
 import { Constructor } from "../Types";
+import Bindable from '../Bindable';
 
 interface IBlocContextEntry {
     name: string;
@@ -12,21 +13,31 @@ interface IBlocContextEntry {
  */
 export default class BlocContextValue {
 
+    /**
+     * Bindable state which indicates whether the BLoC instances are currently in initialization.
+     */
+    isInitializing: Bindable<boolean>;
+
     private _entries: IBlocContextEntry[];
 
 
     constructor(entries?: object) {
         this._entries = new Array<IBlocContextEntry>();
+        this.isInitializing = new Bindable<boolean>(false);
 
         // If default entries are provided, use that.
         if (typeof (entries) === "object") {
             Object.keys(entries)
                 .forEach(k => {
                     const bloc = Reflect.get(entries, k) as BaseBloc;
-                    if (bloc !== null && bloc !== undefined)
-                        this.addEntry({name: k, bloc});
+                    if (bloc !== null && bloc !== undefined) {
+                        this.addEntry({ name: k, bloc });
+                    }
                 });
         }
+
+        Promise.all(this._entries.map(e => e.bloc.initialize()))
+            .then(() => this.isInitializing.setValue(true));
     }
 
     /**
