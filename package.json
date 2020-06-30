@@ -39,5 +39,8 @@
     "test": "npm run lint && npm run test:jest",
     "test:jest": "./node_modules/.bin/jest --runInBand",
     "lint": "./node_modules/.bin/tslint --config tslint.json --project ."
+  },
+  "dependencies": {
+    "localforage": "^1.7.4"
   }
 }
