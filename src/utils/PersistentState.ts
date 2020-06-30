@@ -10,7 +10,7 @@ localForage.config({
 /**
  * Makes the specified bindable object's state persistent.
  */
-export async function makePersistent<TValue>(bindable: Bindable<TValue>, uniqueKey: string, customStore?: LocalForage): Bindable<TValue> {
+export async function makePersistent<TValue>(bindable: Bindable<TValue>, uniqueKey: string, customStore?: LocalForage): Promise<Bindable<TValue>> {
     const store = customStore || localForage;
 
     function subscribeToBindable() {
