@@ -18,7 +18,7 @@ export default class Bindable<T> {
 
     private _idIncrement: number;
     private _value: T;
-    private _listeners: Array<ListenerInfo<T> | null>;
+    private _listeners: (ListenerInfo<T> | null)[];
 
     constructor(value: T) {
         this._idIncrement = 0;
