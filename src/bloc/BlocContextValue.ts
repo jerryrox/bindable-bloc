@@ -23,7 +23,7 @@ export default class BlocContextValue {
 
     constructor(entries?: object) {
         this._entries = new Array<IBlocContextEntry>();
-        this.isInitializing = new Bindable<boolean>(false);
+        this.isInitializing = new Bindable<boolean>(true);
 
         // If default entries are provided, use that.
         if (typeof (entries) === "object") {
@@ -37,7 +37,7 @@ export default class BlocContextValue {
         }
 
         Promise.all(this._entries.map(e => e.bloc.initialize()))
-            .then(() => this.isInitializing.setValue(true));
+            .then(() => this.isInitializing.setValue(false));
     }
 
     /**
