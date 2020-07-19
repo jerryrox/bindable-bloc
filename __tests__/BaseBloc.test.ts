@@ -4,10 +4,21 @@ import BlocEvent from '../src/bloc/BlocEvent';
 class TestBloc extends BaseBloc {
 
     lastEvent: BlocEvent | undefined;
+    isInitialized: boolean;
 
     constructor() {
         super();
         super.hookEvent("testEventName", (e) => this.lastEvent = e);
+        this.isInitialized = false;
+    }
+
+    async initialize() {
+        return new Promise<void>((resolve) => {
+            setTimeout(() => {
+                resolve();
+                this.isInitialized = true;
+            }, 100);
+        });
     }
 }
 
@@ -21,4 +32,14 @@ test("BaseBloc event handling", () => {
     expect(testbloc.lastEvent).toBeUndefined();
     testbloc.processEvent(testEvent);
     expect(testbloc.lastEvent).toBe(testEvent);
+});
+
+test("BaseBloc initialize", async () => {
+    const bloc = new TestBloc();
+    expect(bloc.isInitialized).toBeFalsy();
+
+    const promise = bloc.initialize();
+    expect(bloc.isInitialized).toBeFalsy();
+    await promise;
+    expect(bloc.isInitialized).toBeTruthy();
 });

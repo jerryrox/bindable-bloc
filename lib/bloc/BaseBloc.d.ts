@@ -3,9 +3,13 @@ declare type EventHandler = (e: BlocEvent) => void;
 /**
  * The base class of any BLoC class in the application.
  */
-export default class BaseBloc {
+export default abstract class BaseBloc {
     private _eventHooks;
     constructor();
+    /**
+     * Initializes the BLoC instance asynchronously if required.
+     */
+    initialize(): Promise<void>;
     /**
      * Handles the specified event using handlers registered via hookEvent.
      * @param {BlocEvent} event The event data to pass to the event handlers.

@@ -25,7 +25,7 @@ class BlocEventHook {
 /**
  * The base class of any BLoC class in the application.
  */
-export default class BaseBloc {
+export default abstract class BaseBloc {
 
     private _eventHooks: BlocEventHook[];
 
@@ -33,6 +33,11 @@ export default class BaseBloc {
     constructor() {
         this._eventHooks = new Array<BlocEventHook>();
     }
+
+    /**
+     * Initializes the BLoC instance asynchronously if required.
+     */
+    async initialize(): Promise<void> { }
 
     /**
      * Handles the specified event using handlers registered via hookEvent.

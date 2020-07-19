@@ -1,6 +1,6 @@
 import React from "react";
-import { useBindable } from '../../src/Bindable';
 import Bindable from '../../src/Bindable';
+import useBindable from '../../src/utils/useBindable';
 
 interface ILabelDisplayerProp {
     bindable: Bindable<string>

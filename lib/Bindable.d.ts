@@ -31,7 +31,3 @@ export default class Bindable<T> {
      */
     trigger(): void;
 }
-/**
- * A custom React hook which allows a functional component to refresh when the value of the bindable has changed.
- */
-export declare function useBindable<T>(bindable: Bindable<T>, onChange?: (v: T) => any): T;

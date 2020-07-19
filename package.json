@@ -1,7 +1,7 @@
 {
   "name": "bindable-bloc",
   "author": "Jerry Kim <jerryrox@live.co.kr>",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "license": "MIT",
@@ -39,5 +39,8 @@
     "test": "npm run lint && npm run test:jest",
     "test:jest": "./node_modules/.bin/jest --runInBand",
     "lint": "./node_modules/.bin/tslint --config tslint.json --project ."
+  },
+  "dependencies": {
+    "localforage": "^1.7.4"
   }
 }
