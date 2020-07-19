@@ -75,7 +75,7 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
-### 1.1.2 (WIP)
+### 1.1.2
 - Support for persistent state using localForage dependency.
 ### 1.1.1
 - Added more tests.
