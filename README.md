@@ -71,9 +71,8 @@ bindableData.setValue([
 ]);
 ```
 
-
-### Some major ToDos
-- Support for persistent state.
+## TODOs
+- Add more examples in README
 
 ## Versions
 ### 1.1.2 (WIP)
