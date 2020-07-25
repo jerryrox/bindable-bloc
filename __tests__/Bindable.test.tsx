@@ -49,3 +49,23 @@ test("Update component state with useBindable hook", () => {
     component.mount();
     expect(component.find("p").at(0).text()).toEqual("Lol2");
 });
+
+test("Test subscribe and trigger", () => {
+    const bindable = new Bindable<string>("lolz");
+    expect(bindable.getValue()).toBe("lolz");
+    
+    let callbackedVal = bindable.getValue();
+    const bindableCallback = (val: string) => callbackedVal = val;
+
+    bindable.setValue("zzz");
+    expect(bindable.getValue()).toBe("zzz");
+    expect(callbackedVal).toBe("lolz");
+
+    bindable.subscribeAndTrigger(bindableCallback);
+    expect(bindable.getValue()).toBe("zzz");
+    expect(callbackedVal).toBe("zzz");
+
+    bindable.setValue("a");
+    expect(bindable.getValue()).toBe("a");
+    expect(callbackedVal).toBe("a");
+});

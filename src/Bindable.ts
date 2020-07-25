@@ -53,6 +53,16 @@ export default class Bindable<T> {
     }
 
     /**
+     * Subscribes the specified callback function and immediately calls it with the Bindable's value.
+     * @param {ActionT<T>} callback The function to be invoked on value change and immediately after this method call.
+     */
+    subscribeAndTrigger(callback: ActionT<T>): number {
+        const id = this.subscribe(callback);
+        callback(this._value);
+        return id;
+    }
+
+    /**
      * Removes the listener of specified id.
      * @param {number} callbackId The subscriber ID returned from calling subscribe method.
      */
