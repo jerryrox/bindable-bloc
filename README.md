@@ -75,6 +75,8 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
+### 1.1.3
+- Added ability to subscribe to a bindable and immediately receive trigger callback.
 ### 1.1.2
 - Support for persistent state using localForage dependency.
 ### 1.1.1
