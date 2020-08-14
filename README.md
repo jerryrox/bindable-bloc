@@ -75,6 +75,8 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
+### 1.1.4
+- Fixed bug where the Bindable.trigger() method will throw an error if the callback became undefined or null.
 ### 1.1.3
 - Added ability to subscribe to a bindable and immediately receive trigger callback.
 ### 1.1.2
