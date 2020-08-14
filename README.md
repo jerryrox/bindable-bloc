@@ -75,6 +75,8 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
+### 1.1.4.1
+- Added undefined value check against listener during Bindable.trigger().
 ### 1.1.4
 - Fixed bug where the Bindable.trigger() method will throw an error if the callback became undefined or null.
 ### 1.1.3
