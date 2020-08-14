@@ -82,7 +82,8 @@ export default class Bindable<T> {
     trigger() {
         for (let i = this._listeners.length - 1; i >= 0; i--) {
             const listener = this._listeners[i];
-            if (listener !== null && listener.callback !== null && listener.callback !== undefined) {
+            if (listener !== null && listener !== undefined &&
+                listener.callback !== null && listener.callback !== undefined) {
                 listener.callback(this._value);
             }
             else {
