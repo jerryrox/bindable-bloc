@@ -6,6 +6,16 @@ export default class Bindable<T> {
     private _idIncrement;
     private _value;
     private _listeners;
+    /**
+     * Returns the value in the Bindable.
+     * Equivalent to getValue().
+     */
+    get value(): T;
+    /**
+     * Sets the value in the Bindable.
+     * Equivalent to setValue() with trigger = true.
+     */
+    set value(val: T);
     constructor(value: T);
     /**
      * Returns the value of the bindable.
@@ -14,8 +24,9 @@ export default class Bindable<T> {
     /**
      * Sets the value of the bindable and triggers a change event to listeners.
      * @param {T} value The value to set to the Bindable.
+     * @param {boolean} trigger Whether this call should trigger change event.
      */
-    setValue(value: T): void;
+    setValue(value: T, trigger?: boolean): void;
     /**
      * Registers the specified callback function to listen to value change events.
      * @param {ActionT<T>} callback The function to be invoked on value change.
