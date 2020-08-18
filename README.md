@@ -75,6 +75,9 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
+### 1.1.6
+- Added value getter / setter properties to Bindable for convenience.
+- Added ability to set Bindable's value without triggering an event.
 ### 1.1.5
 - Added undefined value check against listener during Bindable.trigger().
 ### 1.1.4
