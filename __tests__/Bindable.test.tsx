@@ -69,3 +69,27 @@ test("Test subscribe and trigger", () => {
     expect(bindable.getValue()).toBe("a");
     expect(callbackedVal).toBe("a");
 });
+
+test("Test without trigger", () => {
+    const bindable = new Bindable<number>(1);
+
+    let receivedValue = bindable.getValue();
+    bindable.subscribe((value) => receivedValue = value);
+
+    bindable.setValue(2);
+    expect(receivedValue).toBe(2);
+    bindable.setValue(3, false);
+    expect(receivedValue).toBe(2);
+});
+
+test("Test property", () => {
+    const bindable = new Bindable<number>(1);
+    expect(bindable.value).toBe(1);
+
+    let receivedValue = bindable.getValue();
+    bindable.subscribe((value) => receivedValue = value);
+
+    bindable.value = 2;
+    expect(bindable.value).toBe(2);
+    expect(receivedValue).toBe(2);
+});

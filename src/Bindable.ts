@@ -20,6 +20,18 @@ export default class Bindable<T> {
     private _value: T;
     private _listeners: (ListenerInfo<T> | null)[];
 
+    /**
+     * Returns the value in the Bindable.
+     * Equivalent to getValue().
+     */
+    get value(): T { return this._value; }
+
+    /**
+     * Sets the value in the Bindable.
+     * Equivalent to setValue() with trigger = true.
+     */
+    set value(val: T) { this.setValue(val); }
+
     constructor(value: T) {
         this._idIncrement = 0;
         this._value = value;
