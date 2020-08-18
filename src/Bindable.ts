@@ -34,10 +34,13 @@ export default class Bindable<T> {
     /**
      * Sets the value of the bindable and triggers a change event to listeners.
      * @param {T} value The value to set to the Bindable.
+     * @param {boolean} trigger Whether this call should trigger change event.
      */
-    setValue(value: T) {
+    setValue(value: T, trigger: boolean = true) {
         this._value = value;
-        this.trigger();
+        if (trigger === true) {
+            this.trigger();
+        }
     }
 
     /**
