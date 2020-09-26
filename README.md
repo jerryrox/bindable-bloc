@@ -75,6 +75,8 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
+### 1.1.7
+- A quick fix where bindable subscription would potentially occur every render.
 ### 1.1.6
 - Added value getter / setter properties to Bindable for convenience.
 - Added ability to set Bindable's value without triggering an event.
