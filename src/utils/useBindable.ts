@@ -7,18 +7,15 @@ import Bindable from "../Bindable";
 export default function useBindable<T>(bindable: Bindable<T>, onChange?: (v: T) => any) {
     const [value, setValue] = useState(bindable.getValue());
 
-    if (typeof (onChange) !== "function")
-        onChange = () => { };
-
     useEffect(() => {
         const id = bindable.subscribe((newVal: T) => {
             setValue(newVal);
-            if(typeof(onChange) === "function")
+            if(onChange !== undefined)
                 onChange(newVal);
         });
         return () => {
             bindable.unsubscribe(id);
         };
-    }, [bindable, value, onChange]);
+    }, [bindable, onChange]);
     return value;
 }
