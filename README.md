@@ -75,6 +75,8 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
+### 1.1.8
+- Fixed bug in `useBindable` where changing the Bindable instance wouldn't trigger state update.
 ### 1.1.7
 - A quick fix where bindable subscription would potentially occur every render.
 ### 1.1.6
