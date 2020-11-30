@@ -13,6 +13,8 @@ export default function useBindable<T>(bindable: Bindable<T>, onChange?: (v: T) 
             if(onChange !== undefined)
                 onChange(newVal);
         });
+        // Set value once again in case the bindable itself has changed.
+        setValue(bindable.value);
         return () => {
             bindable.unsubscribe(id);
         };
