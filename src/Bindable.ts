@@ -19,6 +19,17 @@ export default class Bindable<T> {
     private _idIncrement: number;
     private _value: T;
     private _listeners: (ListenerInfo<T> | null)[];
+    private _triggerWhenDifferent: boolean = true;
+
+    /**
+     * Returns whether the bindable will trigger on assigning value only when the equality operator returns false.
+     */
+    get triggerWhenDifferent(): boolean { return this._triggerWhenDifferent; }
+
+    /**
+     * Sets whether bindable will trigger on setting the value only when the equality operator returns false.
+     */
+    set triggerWhenDifferent(value: boolean) { this._triggerWhenDifferent = value; }
 
     /**
      * Returns the value in the Bindable.
@@ -32,10 +43,11 @@ export default class Bindable<T> {
      */
     set value(val: T) { this.setValue(val); }
 
-    constructor(value: T) {
+    constructor(value: T, triggerWhenDifferent: boolean = true) {
         this._idIncrement = 0;
         this._value = value;
         this._listeners = [];
+        this._triggerWhenDifferent = triggerWhenDifferent;
     }
 
     /**
@@ -49,8 +61,13 @@ export default class Bindable<T> {
      * @param {boolean} trigger Whether this call should trigger change event.
      */
     setValue(value: T, trigger: boolean = true) {
+        const prevValue = this._value;
         this._value = value;
+
         if (trigger === true) {
+            if(this._triggerWhenDifferent && prevValue === value) {
+                return;
+            }
             this.trigger();
         }
     }
