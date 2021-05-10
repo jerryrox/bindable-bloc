@@ -19,6 +19,25 @@ export default class Bindable<T> {
     private _idIncrement: number;
     private _value: T;
     private _listeners: (ListenerInfo<T> | null)[];
+    private _triggerWhenDifferent: boolean = true;
+
+    private _proxySource: Bindable<T> | null = null;
+    private _proxySubscription: number = 0;
+
+    /**
+     * Returns the source bindable this instance is continuously listening to.
+     */
+    get proxySource(): Bindable<T> | null { return this._proxySource; }
+
+    /**
+     * Returns whether the bindable will trigger on assigning value only when the equality operator returns false.
+     */
+    get triggerWhenDifferent(): boolean { return this._triggerWhenDifferent; }
+
+    /**
+     * Sets whether bindable will trigger on setting the value only when the equality operator returns false.
+     */
+    set triggerWhenDifferent(value: boolean) { this._triggerWhenDifferent = value; }
 
     /**
      * Returns the value in the Bindable.
@@ -32,10 +51,33 @@ export default class Bindable<T> {
      */
     set value(val: T) { this.setValue(val); }
 
-    constructor(value: T) {
+    constructor(value: T, triggerWhenDifferent: boolean = true) {
         this._idIncrement = 0;
         this._value = value;
         this._listeners = [];
+        this._triggerWhenDifferent = triggerWhenDifferent;
+    }
+
+    /**
+     * Starts proxying the value from the specified bindable.
+     * @param {Bindable<T>} source The source bindable to continuously receive values from.
+     */
+    startProxy(source: Bindable<T>) {
+        this.stopProxy();
+
+        this._proxySource = source;
+        this._proxySubscription = source.subscribeAndTrigger((value) => this.setValue(value));
+    }
+
+    /**
+     * Stops proxying the bindable's value from current proxy source.
+     */
+    stopProxy() {
+        if(this._proxySource !== null) {
+            this._proxySource.unsubscribe(this._proxySubscription);
+            this._proxySource = null;
+            this._proxySubscription = 0;
+        }
     }
 
     /**
@@ -49,7 +91,11 @@ export default class Bindable<T> {
      * @param {boolean} trigger Whether this call should trigger change event.
      */
     setValue(value: T, trigger: boolean = true) {
+        if(this._triggerWhenDifferent && this._value === value) {
+            return;
+        }
         this._value = value;
+
         if (trigger === true) {
             this.trigger();
         }

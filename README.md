@@ -75,6 +75,9 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
+### 1.2.0
+- Added a flag to trigger on `setValue` only when the new value is not equal to the existing value.
+- Implemented ability to continuously receive value from another `Bindable` using `startProxy` and `stopProxy`.
 ### 1.1.8
 - Fixed bug in `useBindable` where changing the Bindable instance wouldn't trigger state update.
 ### 1.1.7

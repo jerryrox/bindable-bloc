@@ -6,6 +6,21 @@ export default class Bindable<T> {
     private _idIncrement;
     private _value;
     private _listeners;
+    private _triggerWhenDifferent;
+    private _proxySource;
+    private _proxySubscription;
+    /**
+     * Returns the source bindable this instance is continuously listening to.
+     */
+    get proxySource(): Bindable<T> | null;
+    /**
+     * Returns whether the bindable will trigger on assigning value only when the equality operator returns false.
+     */
+    get triggerWhenDifferent(): boolean;
+    /**
+     * Sets whether bindable will trigger on setting the value only when the equality operator returns false.
+     */
+    set triggerWhenDifferent(value: boolean);
     /**
      * Returns the value in the Bindable.
      * Equivalent to getValue().
@@ -16,7 +31,16 @@ export default class Bindable<T> {
      * Equivalent to setValue() with trigger = true.
      */
     set value(val: T);
-    constructor(value: T);
+    constructor(value: T, triggerWhenDifferent?: boolean);
+    /**
+     * Starts proxying the value from the specified bindable.
+     * @param {Bindable<T>} source The source bindable to continuously receive values from.
+     */
+    startProxy(source: Bindable<T>): void;
+    /**
+     * Stops proxying the bindable's value from current proxy source.
+     */
+    stopProxy(): void;
     /**
      * Returns the value of the bindable.
      */
