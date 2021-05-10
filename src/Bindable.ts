@@ -66,7 +66,7 @@ export default class Bindable<T> {
         this.stopProxy();
 
         this._proxySource = source;
-        this._proxySubscription = source.subscribe((value) => this.setValue(value));
+        this._proxySubscription = source.subscribeAndTrigger((value) => this.setValue(value));
     }
 
     /**
@@ -91,13 +91,12 @@ export default class Bindable<T> {
      * @param {boolean} trigger Whether this call should trigger change event.
      */
     setValue(value: T, trigger: boolean = true) {
-        const prevValue = this._value;
+        if(this._triggerWhenDifferent && this._value === value) {
+            return;
+        }
         this._value = value;
 
         if (trigger === true) {
-            if(this._triggerWhenDifferent && prevValue === value) {
-                return;
-            }
             this.trigger();
         }
     }

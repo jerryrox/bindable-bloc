@@ -94,3 +94,43 @@ test("Test property", () => {
     expect(receivedValue).toBe(2);
 });
 
+test("TriggerWhenDifferent", () => {
+    // Bindable will trigger only when new value is different.
+    const bindable = new Bindable<number>(0, true);
+    let received = -1;
+    bindable.subscribe((value) => received = value);
+
+    // Existing value matches the new value, so event shouldn't trigger.
+    bindable.setValue(0);
+    expect(received).toBe(-1);
+    bindable.setValue(1);
+    expect(received).toBe(1);
+
+    received = -1;
+    bindable.triggerWhenDifferent = false;
+    bindable.setValue(1);
+    expect(received).toBe(1);
+
+    received = -1;
+    bindable.triggerWhenDifferent = true;
+    bindable.setValue(1);
+    expect(received).toBe(-1);
+});
+
+test("Proxying bindable", () => {
+    const sourceBindable = new Bindable<number>(0);
+    const bindable = new Bindable<number>(1);
+
+    bindable.startProxy(sourceBindable);
+    expect(bindable.value).toBe(sourceBindable.value);
+
+    sourceBindable.value = 10;
+    expect(bindable.value).toBe(10);
+
+    bindable.stopProxy();
+    sourceBindable.value = 11;
+    expect(bindable.value).toBe(10);
+
+    bindable.startProxy(sourceBindable);
+    expect(bindable.value).toBe(sourceBindable.value);
+});
