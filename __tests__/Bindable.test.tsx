@@ -6,22 +6,22 @@ import Bindable from '../src/Bindable';
 import { LabelDisplayer } from './mockup/index';
 
 test("Initialize Bindable with values passed into constructor.", () => {
-    const bindable = new Bindable<number>(0);
+    const bindable = new Bindable<number>(0, false);
     expect(bindable.getValue()).toBe(0);
 
-    const bindable2 = new Bindable<string>("a");
+    const bindable2 = new Bindable<string>("a", false);
     expect(bindable2.getValue()).toBe("a");
 });
 
 test("Set Bindable value", () => {
-    const bindable = new Bindable<number>(2);
+    const bindable = new Bindable<number>(2, false);
     expect(bindable.getValue()).toBe(2);
     bindable.setValue(3);
     expect(bindable.getValue()).toBe(3);
 });
 
 test("Subscribe to/Unsubscribe from Bindable", () => {
-    const bindable = new Bindable<number>(1);
+    const bindable = new Bindable<number>(1, false);
 
     let receivedValue = bindable.getValue();
     const id = bindable.subscribe((v) => receivedValue = v);
@@ -37,7 +37,7 @@ test("Subscribe to/Unsubscribe from Bindable", () => {
 });
 
 test("Update component state with useBindable hook", () => {
-    const bindable = new Bindable<string>("Lol");
+    const bindable = new Bindable<string>("Lol", false);
     const component = mount(
         <LabelDisplayer bindable={bindable}/>
     );
@@ -51,9 +51,9 @@ test("Update component state with useBindable hook", () => {
 });
 
 test("Test subscribe and trigger", () => {
-    const bindable = new Bindable<string>("lolz");
+    const bindable = new Bindable<string>("lolz", false);
     expect(bindable.getValue()).toBe("lolz");
-    
+
     let callbackedVal = bindable.getValue();
     const bindableCallback = (val: string) => callbackedVal = val;
 
@@ -71,7 +71,7 @@ test("Test subscribe and trigger", () => {
 });
 
 test("Test without trigger", () => {
-    const bindable = new Bindable<number>(1);
+    const bindable = new Bindable<number>(1, false);
 
     let receivedValue = bindable.getValue();
     bindable.subscribe((value) => receivedValue = value);
@@ -83,7 +83,7 @@ test("Test without trigger", () => {
 });
 
 test("Test property", () => {
-    const bindable = new Bindable<number>(1);
+    const bindable = new Bindable<number>(1, false);
     expect(bindable.value).toBe(1);
 
     let receivedValue = bindable.getValue();
@@ -93,3 +93,4 @@ test("Test property", () => {
     expect(bindable.value).toBe(2);
     expect(receivedValue).toBe(2);
 });
+
