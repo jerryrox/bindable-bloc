@@ -138,6 +138,29 @@ export default class Bindable<T> {
     }
 
     /**
+     * Adds the specified callback to listen to value changes.
+     */
+    bind(callback: ActionT<T>, trigger: boolean = true): void {
+        this.subscribe(callback);
+        if(trigger) {
+            callback(this._value);
+        }
+    }
+
+    /**
+     * Unbinds the specified callback reference.
+     */
+    unbind(callback: ActionT<T>): void {
+        for (let i = 0; i < this._listeners.length; i++) {
+            const listener = this._listeners[i];
+            if (listener !== null && listener.callback === callback) {
+                this._listeners[i] = null;
+                return;
+            }
+        }
+    }
+
+    /**
      * Manually triggers all listeners' callback functions.
      */
     trigger() {

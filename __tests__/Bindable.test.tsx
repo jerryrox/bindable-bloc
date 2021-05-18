@@ -134,3 +134,33 @@ test("Proxying bindable", () => {
     bindable.startProxy(sourceBindable);
     expect(bindable.value).toBe(sourceBindable.value);
 });
+
+test("Test bind/unbind", () => {
+    let callbackedValue: string = "";
+    const callback = (value: string) => {
+        callbackedValue = value;
+    };
+
+    const bindable = new Bindable<string>("lolz", false);
+
+    bindable.setValue("zzz");
+    expect(bindable.getValue()).toBe("zzz");
+    expect(callbackedValue).toBe("");
+
+    bindable.bind(callback, false);
+    expect(bindable.getValue()).toBe("zzz");
+    expect(callbackedValue).toBe("");
+
+    bindable.value = "a";
+    expect(bindable.getValue()).toBe("a");
+    expect(callbackedValue).toBe("a");
+
+    bindable.unbind(callback);
+    bindable.value = "b";
+    expect(bindable.getValue()).toBe("b");
+    expect(callbackedValue).toBe("a");
+
+    bindable.bind(callback, true);
+    expect(bindable.getValue()).toBe("b");
+    expect(callbackedValue).toBe("b");
+});
