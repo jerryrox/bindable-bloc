@@ -75,6 +75,8 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
+### 1.2.1
+- Added bind/unbind functions to cover some limitations imposed by subscribe/unsubscribe.
 ### 1.2.0
 - Added a flag to trigger on `setValue` only when the new value is not equal to the existing value.
 - Implemented ability to continuously receive value from another `Bindable` using `startProxy` and `stopProxy`.
