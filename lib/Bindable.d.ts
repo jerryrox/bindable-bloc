@@ -67,6 +67,14 @@ export default class Bindable<T> {
      */
     unsubscribe(callbackId: number): void;
     /**
+     * Adds the specified callback to listen to value changes.
+     */
+    bind(callback: ActionT<T>, trigger?: boolean): void;
+    /**
+     * Unbinds the specified callback reference.
+     */
+    unbind(callback: ActionT<T>): void;
+    /**
      * Manually triggers all listeners' callback functions.
      */
     trigger(): void;
