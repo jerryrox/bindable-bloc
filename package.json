@@ -1,7 +1,7 @@
 {
   "name": "bindable-bloc",
   "author": "Jerry Kim <jerryrox@live.co.kr>",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "license": "MIT",
