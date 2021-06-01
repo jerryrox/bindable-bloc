@@ -1,16 +1,18 @@
 import React from "react";
 import Bindable from '../../src/Bindable';
 import useBindable from '../../src/utils/useBindable';
+import { useBindableUnsafe } from "../../src/utils/useBindable";
 
 interface ILabelDisplayerProp {
-    bindable: Bindable<string>
+    bindable: Bindable<string>;
+    onChange?: (value: string) => void;
 }
-
 export const LabelDisplayer = ({
-    bindable
+    bindable,
+    onChange,
 }: ILabelDisplayerProp) => {
 
-    const boundData = useBindable(bindable);
+    const boundData = useBindable(bindable, onChange);
 
     return (
         <div>
@@ -18,3 +20,23 @@ export const LabelDisplayer = ({
         </div>
     );
 };
+
+
+interface INullableTestParam {
+    bindable: Bindable<string> | null | undefined;
+    onChange?: (value: string | undefined) => void;
+}
+const NullableTest = ({
+    bindable,
+    onChange,
+}: INullableTestParam) => {
+
+    const data = useBindableUnsafe(bindable, onChange);
+
+    return (
+        <div>
+            <p>{data ?? "undefined"}</p>
+        </div>
+    );
+};
+export default NullableTest;

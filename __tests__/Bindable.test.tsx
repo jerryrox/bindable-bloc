@@ -4,6 +4,7 @@ import { shallow, mount } from 'enzyme';
 
 import Bindable from '../src/Bindable';
 import { LabelDisplayer } from './mockup/index';
+import NullableTest from "./mockup/index";
 
 test("Initialize Bindable with values passed into constructor.", () => {
     const bindable = new Bindable<number>(0, false);
@@ -38,16 +39,65 @@ test("Subscribe to/Unsubscribe from Bindable", () => {
 
 test("Update component state with useBindable hook", () => {
     const bindable = new Bindable<string>("Lol", false);
+    let changeValue = "";
     const component = mount(
-        <LabelDisplayer bindable={bindable}/>
+        <LabelDisplayer bindable={bindable} onChange={(v) => changeValue = v}/>
     );
     expect(component.find("p").at(0).text()).toEqual("Lol");
+    expect(changeValue).toBe("Lol");
 
     act(() => {
         bindable.setValue("Lol2");
     });
-    component.mount();
     expect(component.find("p").at(0).text()).toEqual("Lol2");
+    expect(changeValue).toBe("Lol2");
+
+    const newBindable = new Bindable<string>("another", false);
+    component.setProps({
+        bindable: newBindable,
+    });
+    expect(component.find("p").at(0).text()).toEqual("another");
+    expect(changeValue).toBe("another");
+});
+
+test("Update component state with useBindableUnsafe hook", () => {
+    const bindable = new Bindable<string>("Lol", false);
+    let changeValue: string | undefined = "";
+    const component = mount(
+        <NullableTest bindable={bindable} onChange={(v) => changeValue = v}/>
+    );
+    expect(component.find("p").at(0).text()).toBe("Lol");
+    expect(changeValue).toBe("Lol");
+
+    component.setProps({
+        bindable: null,
+    });
+    expect(component.find("p").at(0).text()).toBe("undefined");
+    expect(changeValue).toBe(undefined);
+
+    component.setProps({
+        bindable: undefined,
+    });
+    expect(component.find("p").at(0).text()).toBe("undefined");
+    expect(changeValue).toBe(undefined);
+
+    act(() => {
+        bindable.setValue("Lol2");
+    });
+    expect(component.find("p").at(0).text()).toBe("undefined");
+    expect(changeValue).toBe(undefined);
+
+    component.setProps({
+        bindable,
+    });
+    expect(component.find("p").at(0).text()).toBe("Lol2");
+    expect(changeValue).toBe("Lol2");
+
+    act(() => {
+        bindable.setValue("Lol3");
+    });
+    expect(component.find("p").at(0).text()).toBe("Lol3");
+    expect(changeValue).toBe("Lol3");
 });
 
 test("Test subscribe and trigger", () => {
