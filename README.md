@@ -75,7 +75,7 @@ bindableData.setValue([
 - Add more examples in README
 
 ## Versions
-### 1.2.2
+### 1.2.3
 - Implemented `useBindableUnsafe` to support null or undefined bindables as parameter.
 - Fixed `useBindable`'s `onChange` callback not being invoked when the bindable changes.
 ### 1.2.1
